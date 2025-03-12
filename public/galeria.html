@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galéria</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #bda25867;
+            text-align: center;
+        }
+        header {
+            background: #004466;
+            color: rgb(236, 224, 202);
+            padding: 25px;
+            font-size: 30px;
+            font-weight: bold;
+        }
+        nav {
+            background: #003355;
+            padding: 15px 0;
+        }
+        nav a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            font-size: 20px;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .container {
+            padding: 20px;
+            position: relative;
+        }
+        .fogas-lista {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+        .fogas-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .fogas-item img {
+            width: 150px;
+            height: auto;
+            border-radius: 5px;
+            object-fit: cover;
+            cursor: pointer; /* Mutatót ad a képre */
+        }
+        #szurok {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            background: #01121d5e;
+            padding: 20px;
+            border: 3px solid #000000;
+            border-radius: 20px;
+            text-align: left;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0);
+            color: rgb(255, 255, 255);
+            font-family: 'Times New Roman', Times, serif;
+        }
+        #szurok label, #szurok input, #szurok select, #szurok button {
+            display: block;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #004466;
+            border-radius: 5px;
+            width: 200px;
+            background-color: #e6d19ad0;
+            color: rgb(0, 0, 0);
+        }
+        #szurok button {
+            background-color: #e6d19ad0;
+            color: #003355;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+            padding: 10px 15px;
+            transition: background-color 0.3s ease;
+        }
+        #szurok button:hover {
+            background-color: #d1a974;
+        }
+        #szuroIkon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>Horgászat</header>
+    <nav>
+        <a href="index.html">Kezdőlap</a>
+        <a href="idojaras.html">Időjárás</a>
+        <a href="horgaszrend.html">Horgász Rend</a>
+        <a href="galeria.html">Galéria</a>
+        <a href="uj_fogas.html">Új Fogás Hozzáadása</a>
+    </nav>
+
+    <div class="container">
+        <h2>Elmentett Fogások</h2>
+        <div id="szuroIkon" onclick="szurokMutat()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30">
+                <path d="M10 18h4v-2h-4v2zM3 6v2h18v-2H3zm3 7h12v-2H6v2z"/>
+            </svg>
+        </div>
+
+        <div id="szurok">
+            <label for="halfajSzuro">Halfaj:</label>
+            <input type="text" id="halfajSzuro">
+
+            <label for="vizteruletSzuro">Vízterület:</label>
+            <input type="text" id="vizteruletSzuro">
+
+            <label for="csaliSzuro">Csali:</label>
+            <input type="text" id="csaliSzuro">
+
+            <label for="datumSzuro">Dátum:</label>
+            <input type="date" id="datumSzuro">
+
+            <button onclick="szuresFogasok()">Szűrés</button>
+        </div>
+        <div class="fogas-lista" id="fogasLista"></div>
+    </div>
+
+    <script>
+        function szurokMutat() {
+            let szurok = document.getElementById('szurok');
+            szurok.style.display = szurok.style.display === 'block' ? 'none' : 'block';
+        }function betoltottFogasok(szurok) {
+            fetch('/fogasok')
+                .then(response => response.json())
+                .then(fogasok => {
+                    console.log("Fogások betöltve:", fogasok);
+                    const lista = document.getElementById('fogasLista');
+                    lista.innerHTML = '';
+
+                    if (szurok) {
+                        fogasok = fogasok.filter(fogas => {
+                            let halfajSzuro = szurok.halfaj.toLowerCase();
+                            let vizteruletSzuro = szurok.vizterulet.toLowerCase();
+                            let csaliSzuro = szurok.csali.toLowerCase();
+                            let datumSzuro = szurok.datum;
+
+                            let halfaj = fogas.halfaj.toLowerCase();
+                            let vizterulet = fogas.helyszin.toLowerCase();
+                            let csali = fogas.csali.toLowerCase();
+                            let datum = fogas.datum;
+
+                            let halfajSzures = !halfajSzuro || halfaj.includes(halfajSzuro);
+                            let vizteruletSzures = !vizteruletSzuro || vizterulet.includes(vizteruletSzuro);
+                            let csaliSzures = !csaliSzuro || csali.includes(csaliSzuro);
+                            let datumSzures = !datumSzuro || datum === datumSzuro;
+
+                            return halfajSzures && vizteruletSzures && csaliSzures && datumSzures;
+                        });
+                    }
+
+                    if (fogasok.length === 0) {
+                        console.log("Nincsenek elmentett fogások.");
+                        lista.innerHTML = '<p>Nincsenek elmentett fogások.</p>';
+                        return;
+                    }
+
+                    fogasok.forEach(fogas => {
+                        if (!fogas.id) {
+                            console.error("Hiányzó ID a fogásnál:", fogas);
+                            return;
+                        }
+                        const elem =document.createElement('div');
+                        elem.classList.add('fogas-item');
+
+                        const fogasAdatokDiv = document.createElement('div');
+                        fogasAdatokDiv.innerHTML = `
+                            <p><strong>Halfaj:</strong> ${fogas.halfaj}</p>
+                            <p><strong>Súly:</strong> ${fogas.suly}</p>
+                            <p><strong>Hossz:</strong> ${fogas.hossz} cm</p>
+                            <p><strong>Helyszín:</strong> ${fogas.helyszin}</p>
+                            <p><strong>Dátum:</strong> ${fogas.datum}</p>
+                            <p><strong>Csali:</strong> ${fogas.csali}</p>
+                        `;
+                        elem.appendChild(fogasAdatokDiv);
+
+                        const kepTorlesDiv = document.createElement('div');
+                        if (fogas.kep) {
+                            const kepElem = document.createElement('img');
+                            kepElem.src = fogas.kep;
+                            kepElem.alt = 'Fogás képe';
+                            kepElem.addEventListener('click', function() {
+                                let a = document.createElement('a');
+                                a.href = kepElem.src;
+                                a.download = fogas.kep.split('/').pop(); // Fájlnév kinyerése
+                                document.body.appendChild(a);
+                                a.click();
+                                document.body.removeChild(a);
+                            });
+                            kepTorlesDiv.appendChild(kepElem);
+                        }
+
+                        const torlesIkon = document.createElement('span');
+                        torlesIkon.classList.add('torles-ikon');
+                        torlesIkon.setAttribute('data-id', fogas.id);
+                        console.log("Törlés ikon ID:", fogas.id);
+                        torlesIkon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="red"><path d="M6 19c0 1.1 .9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`;
+                        kepTorlesDiv.appendChild(torlesIkon);
+
+                        const torlesMegerosites = document.createElement('div');
+                        torlesMegerosites.classList.add('torles-megerosites');
+                        torlesMegerosites.setAttribute('data-id', fogas.id);
+                        torlesMegerosites.style.display = 'none';
+                        torlesMegerosites.innerHTML = `
+                            Biztosan törölni szeretnéd ezt a fogást?
+                            <button class="torles-igen" data-id="${fogas.id}">Igen</button>
+                            <button class="torles-nem">Nem</button>
+                        `;
+                        kepTorlesDiv.appendChild(torlesMegerosites);
+
+                        elem.appendChild(kepTorlesDiv);
+                        lista.appendChild(elem);
+                    });
+
+                    document.querySelectorAll('.torles-ikon').forEach(ikon => {
+                        ikon.addEventListener('click', function() {
+                            torlesFogas(this.dataset.id);
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Hiba történt a fogások lekérésekor:', error);
+                    document.getElementById('fogasLista').innerHTML = '<p>Hiba történt a fogások lekérésekor.</p>';
+                });
+        }
+
+        function szuresFogasok() {
+            let szurok = {
+                halfaj: document.getElementById('halfajSzuro').value,
+                vizterulet: document.getElementById('vizteruletSzuro').value,
+                csali: document.getElementById('csaliSzuro').value,
+                datum: document.getElementById('datumSzuro').value
+            };
+            betoltottFogasok(szurok);
+        }
+
+        function torlesFogas(id) {
+            console.log("Törlés ID:", id);
+            const megerosites = document.querySelector(`.torles-megerosites[data-id="${id}"]`);
+            megerosites.style.display = 'block';
+
+            const igenGomb = megerosites.querySelector('.torles-igen');
+            const nemGomb = megerosites.querySelector('.torles-nem');
+
+            igenGomb.addEventListener('click', function() {
+                fetch(`/fogasok/${id}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Hiba történt a fogás törlésekor.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Fogás törölve:', data);
+                    betoltottFogasok();
+                })
+                .catch(error => {
+                    console.error('Hiba történt:', error);
+                });
+                megerosites.style.display = 'none';
+            });
+
+            nemGomb.addEventListener('click', function() {
+                megerosites.style.display = 'none';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            betoltottFogasok();
+        });
+    </script>
+</body>
+</html>

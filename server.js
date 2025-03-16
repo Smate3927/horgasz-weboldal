@@ -5,7 +5,7 @@ const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 
 const app = express();
-const port = process.env.PORT || 3000; // Port beállítása a Render-hez
+const port = process.env.PORT || 4000; // Port beállítása a Render-hez
 
 app.use(express.static('public'));
 app.use(express.json());

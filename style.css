@@ -1,0 +1,145 @@
+label, select {
+  display: block;
+  margin-bottom: 10px;
+}
+
+#eredmeny {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+body {
+  font-family: 'Times New Roman', Times, serif, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #bda25867;
+  text-align: center;
+}
+
+header {
+  background: #004466;
+  color: rgb(236, 224, 202);
+  padding: 25px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+nav {
+  background: #003355;
+  padding: 15px 0;
+}
+
+nav a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-size: 20px;
+  margin: 0 15px;
+  font-weight: bold;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+  flex-wrap: wrap; /* Hozzáadva a tördeléshez */
+}
+
+.photo-upload, .catch-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 45%; /* Csökkentett szélesség */
+  text-align: left;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  box-sizing: border-box; /* Hozzáadva a padding és border beszámításához */
+}
+
+.photo-upload input {
+  display: block;
+  margin-top: 10px;
+}
+
+.catch-form input, .catch-form select {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #a10202;
+  border-radius: 5px;
+  box-sizing: border-box; /* Hozzáadva a padding és border beszámításához */
+}
+
+.catch-form button {
+  background: #004466;
+  color: rgba(255, 255, 255, 0.829);
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.weather-box {
+  background: rgba(0, 68, 102, 0.74);
+  color: rgb(255, 255, 255);
+  padding: 20px;
+  border-radius: 30px;
+  width: 300px;
+  text-align: left;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  box-sizing: border-box; /* Hozzáadva a padding és border beszámításához */
+}
+
+.weather-box label {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.weather-box select {
+  width: 100%;
+  padding: 8px;
+  border: 6px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.836);
+  color: black;
+  box-sizing: border-box; /* Hozzáadva a padding és border beszámításához */
+}
+
+.weather-box p {
+  margin: 5px 0;
+}
+
+.weather-box strong {
+  font-weight: bold;
+}
+
+footer {
+  background: #004466;
+  color: white;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+#szuroIkon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.torles-ikon svg {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.torles-ikon svg:hover {
+  transform: scale(1.2);
+}
+

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horgászat</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #bda25867;
+            background-size: cover;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.966);
+        }
+        header {
+            background: #004466;
+            color: rgba(255, 251, 242, 0.973);
+            padding: 25px;
+            font-size: 30px;
+            font-weight: bold;
+        }
+        nav {
+            background: #003355;
+            padding: 15px 0;
+        }
+        nav a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            font-size: 20px;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+      
+        .container {
+            padding: 10px;
+        }
+        .quote-box {
+            background-color: #0000009d;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 25px;
+            width: 50%;
+            margin: 150px auto;
+            color: rgb(255, 255, 255);
+        }
+        button {
+    margin-top: px;
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #0000009d; /* Gomb háttérszíne */
+    color: white; /* Betűszín */
+    border: none;
+    border-radius: 500px;
+}
+
+button:hover {
+    background-color: #104628d2; /* Gomb színe, ha fölé viszed az egeret */
+}
+
+footer {
+            background: #004466;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        Horgászat
+    </header>
+    <nav>
+        <a href="idojaras.html">Időjárás</a>
+        <a href="horgaszrend.html">Horgász Rend</a>
+        <a href="index.html">Kezdőlap</a>
+        <a href="galeria.html">Galéria</a>
+        <a href="uj_fogas.html">Új Fogás Hozzáadása</a>
+        <a href="informaciok.html">Információk</a>
+    </nav>
+    
+    <div class="container">
+        <div class="quote-box" id="quote">Nyomj a gombra egy idézetért!</div>
+        <button onclick="generateQuote()">Új idézet</button> 
+    </div>
+    <footer>
+        &copy; Horváth & Somlai Fishing
+    </footer>
+
+    <script>
+        const quotes = [
+            "A tudatos horgászat fél siker.",
+            "Minden egyes bedobás egy új esély.",
+            "A természet mindig tanít valamit.",
+            "Kitartással és türelemmel érkezik a siker.",
+            "A víz alatt zajló élet mindig rejt meglepetéseket.",
+            "A horgászat nem csak a halról szól, hanem a pillanatról.",
+            "A megfelelő csali kiválasztása művészet.",
+            "A pontyok kiismerése igazi kihívás.",
+            "A természet csendje a legjobb társaság.",
+            "A balatoni naplemente és egy jó kapás – ennél nem kell több.",
+            "A csalik és szerelékek variálása kulcsfontosságú.",
+            "Az igazi horgász mindig tanul valami újat.",
+            "A horgászat nemcsak hobbi, hanem életforma.",
+            "Egy jó kapás felejthetetlen emlék.",
+            "A halak kiismerése a türelmesek jutalma.",
+            "A víz felszíne alatt egy másik világ létezik.",
+            "Egy jól átgondolt stratégia mindig kifizetődik.",
+            "A horgászat az apró részletek művészete.",
+            "A természet tisztelete minden horgász első szabálya.",
+            "A horgászat türelem és kitartás próbája.",
+            "A vízparti csend gyógyír a léleknek.",
+            "Az év minden szakaszában más kihívások várnak.",
+            "A hal mindig ott van, ahol a legkevésbé számítasz rá.",
+            "A nap első fényei a legszebb kapásokat hozzák.",
+            "A horgászat egy kaland minden alkalommal.",
+            "A csalik közötti választás döntő lehet.",
+            "A legjobb horgászok mindig figyelnek a részletekre.",
+            "A víz mélye mindig tartogat meglepetéseket.",
+            "A természet szeretete a horgászok szívében él.",
+            "A jó helyválasztás fél siker.",
+            "A csend és nyugalom teszi különlegessé a horgászatot.",
+            "A legjobb fogások mindig a váratlan pillanatokban érkeznek.",
+            "A vízparton töltött idő sosem elvesztegetett idő.",
+            "A horgászat a természet és az ember kapcsolatáról szól.",
+            "A megfelelő etetőanyag csodákat tehet.",
+            "A vízparti reggelek varázsa semmihez sem fogható.",
+            "A tapasztalat minden horgász legnagyobb fegyvere.",
+            "Egy jó csali többet ér bármilyen szereléknél.",
+            "A halak kiismerése a legnagyobb kihívás.",
+            "A türelem a horgászat legfontosabb eszköze.",
+            "A horgászat a lélek csendes meditációja.",
+            "A vízparton töltött idő a legjobb terápia.",
+            "A horgászat nem a halakról szól, hanem a pillanatokról.",
+            "A jó horgász ismeri a vizet, mint a tenyerét.",
+            "A horgászat a természet tiszteletének művészete.",
+            "A kapás izgalma felejthetetlen élmény.",
+            "A horgászat a türelem és a kitartás iskolája.",
+            "A vízparti hajnalok varázsa semmihez sem fogható.",
+            "A horgászat a kikapcsolódás és a feltöltődés tökéletes módja.",
+            "A halak megfigyelése a legjobb iskola.",
+            "A horgászat a természet ritmusának megértése.",
+            "A vízparti csend a legjobb zene.",
+            "A horgászat a kaland és a kihívás kombinációja.",
+            "A jó csali a kulcs a sikerhez.",
+            "A horgászat a természet és az ember közötti harmónia megteremtése.",
+            "A vízparti esték a legszebb pillanatok.",
+            "A horgászat a tanulás és a tapasztalatszerzés folyamata.",
+            "A jó horgász ismeri a halak szokásait.",
+            "A horgászat a természet csodáinak felfedezése.",
+            "A vízparti nyugalom a legjobb gyógyszer.",
+            "A horgászat a kikapcsolódás és a feltöltődés művészete.",
+            "A halak tisztelete a horgászok kötelessége.",
+            "A horgászat a természet szeretetének kifejezése.",
+            "A vízparti táj a lélek tükre.",
+            "A horgászat a szenvedély és a hobbi találkozása.",
+            "A jó horgász ismeri a víz mélységeit.",
+            "A horgászat a természet ritmusának követése.",
+            "A vízparti harmónia a lélek békéje.",
+            "A horgászat a kihívás és a siker öröme.",
+            "A halak kiismerése a horgászok célja.",
+            "A horgászat a természet csodáinak megélése.",
+            "A vízparti friss levegő a legjobb energiaforrás.",
+            "A horgászat a kikapcsolódás és a feltöltődés pillanatai.",
+            "A halak védelme a horgászok feladata.",
+            "A horgászat a természet tiszteletének megnyilvánulása.",
+            "A vízparti nyugalom a lélek megnyugvása.",
+            "A horgászat a kaland és a pihenés egyensúlya.",
+            "A jó horgász ismeri a halak táplálkozási szokásait.",
+            "A horgászat a természet ritmusának megértése és követése.",
+            "A vízparti csend a lélek zenéje.",
+            "A horgászat a kihívás és a siker édes íze.",
+            "A halak megóvása a horgászok felelőssége.",
+            "A horgászat a természet szeretetének és tiszteletének kifejezése.",
+            "A vízparti táj a lélek nyugalma.",
+            "A horgászat a szenvedély és a kikapcsolódás harmóniája."
+        ];
+    
+        
+        function generateQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById("quote").innerText = quotes[randomIndex];
+        }
+    </script>
+</body>
+</html>

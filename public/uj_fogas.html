@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Új Fogás Hozzáadása</title>
+   <style>
+    body {
+        font-family: 'Times New Roman', Times, serif, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #bda25867;
+        text-align: center;
+    }
+    header {
+        background: #004466;
+        color: rgb(236, 224, 202);
+        padding: 25px;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    nav {
+        background: #003355;
+        padding: 15px 0;
+    }
+    nav a {
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        font-size: 20px;
+        margin: 0 15px;
+        font-weight: bold;
+    }
+    .container {
+        display: flex; /* Flexbox elrendezés */
+        justify-content: center; /* Vízszintes igazítás */
+        align-items: flex-start; /* Függőleges igazítás */
+        gap: 0px; /* Távolság az elemek között */
+        padding: 10px;
+    }
+    .photo-upload, .catch-form {
+        background: #bda258(219, 0, 0);
+        padding: 20px;
+        border-radius: 30px;
+        width: -60%; /* Szélesség beállítása */
+        text-align: left;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        margin-top: 20px;
+    }
+    .photo-upload input {
+        display: block;
+        margin-top: 10px;
+    }
+    .catch-form input, .catch-form select {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0;
+        border: 1px solid #000000;
+        border-radius: 5px;
+    }
+    .catch-form button {
+        background: #004466be;
+        color: rgb(0, 0, 0);
+        padding: 5px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .catch-form button:hover {
+        background-color: #00000079;
+    }
+    
+    #kepGaleria {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .file-upload-button {
+        background: #004466be;
+        color: rgb(0, 0, 0);
+        padding: 5px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s ease;
+        display: inline-block; /* Fontos, hogy gombként viselkedjen */
+    }
+
+    .file-upload-button:hover {
+        background-color: #00000079;
+    }
+    .file-display {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+
+    .file-item {
+        display: grid;
+        grid-template-columns: 1fr auto; /* Módosított sor */
+        align-items: center;
+        margin-right: 10px;
+        margin-bottom: 5px;
+        border: 1px solid #ccc;
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    .file-preview {
+        width: 100px;
+        height: 50px;
+        object-fit: contain;
+        margin-left: 5px;
+    }
+</style>
+</head>
+<body>
+    <header>Horgászat</header>
+    <nav>
+        <a href="index.html">Kezdőlap</a>
+        <a href="idojaras.html">Időjárás</a>
+        <a href="horgaszrend.html">Horgász Rend</a>
+        <a href="galeria.html">Galéria</a>
+        <a href="uj_fogas.html">Új Fogás Hozzáadása</a>
+        <a href="informaciok.html">Információk</a>
+    </nav>
+
+    
+    <div class="container">
+        <form id="ujFogasForm" action="/feltoltes" method="post" enctype="multipart/form-data">
+            <div class="photo-upload">
+                <h3>Fotó Feltöltése</h3>
+                <label for="kep" class="file-upload-button">Fájlok kiválasztása</label>
+                <input type="file" id="kep" name="kepek" multiple accept="image/*" style="display: none;">
+                <div class="file-display"></div>
+            </div>
+            <div class="catch-form" id="formContainer">
+                <h3>Új Fogás Részletei</h3>
+                <label>Halfaj:</label>
+                <input type="text" id="halfaj" name="halfaj">
+
+                <label>Súly:</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="number" id="suly" name="suly" step="0.1">
+                    <select id="sulyMertek" name="sulyMertek">
+                        <option value="kg">kg</option>
+                        <option value="dkg">dkg</option>
+                    </select>
+                </div>
+
+                <label>Hossz (cm):</label>
+                <input type="number" id="hossz" name="hossz">
+
+                <label>Helyszín:</label>
+                <input type="text" id="helyszin" name="helyszin">
+
+                <label>Dátum:</label>
+                <input type="date" id="datum" name="datum">
+
+                <label>Csali típusa:</label>
+                <input type="text" id="csali" name="csali">
+
+                <button type="submit">Mentés</button>
+            </div>
+        </form>
+        
+        <div id="kepGaleria"></div>
+    </div>
+    
+
+<script>document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('ujFogasForm').addEventListener('submit', function(event) {
+        // ... a többi kód ...
+    });
+    //...többi kód...
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('kep');
+    const fileDisplay = document.querySelector('.file-display');
+
+    fileInput.addEventListener('change', function() {
+        fileDisplay.innerHTML = '';
+        const files = this.files;
+
+        if (files.length > 0) {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const fileItem = document.createElement('div');
+                fileItem.classList.add('file-item');
+
+                const fileName = document.createElement('span');
+                fileName.textContent = file.name;
+                fileItem.appendChild(fileName);
+
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.classList.add('file-preview');
+                        fileItem.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                }
+
+                fileDisplay.appendChild(fileItem);
+            }
+        }
+    });
+});
+
+</script>
+</body>
+</html>

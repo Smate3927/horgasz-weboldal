@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #bda25867;
+            text-align: center;
+        }
+        header {
+            background: #004466;
+            color: rgb(236, 224, 202);
+            padding: 25px;
+            font-size: 30px;
+            font-weight: bold;
+        }
+        nav {
+            background: #003355;
+            padding: 15px 0;
+        }
+        nav a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            font-size: 20px;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        #informaciok {
+            width: 80%;
+            margin: 20px auto;
+            background: #bda258(219, 0, 0);
+            padding: 20px;
+            border-radius: 50px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #informaciok h2 {
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        #informaciok ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #informaciok li {
+            margin-bottom: 10px;
+        }
+
+        #informaciok a {
+            color: #1f5383;
+            text-decoration: none;
+        }
+
+        #informaciok a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <header>
+        Horgászat
+    </header>
+    <nav>
+        <a href="idojaras.html">Időjárás</a>
+        <a href="horgaszrend.html">Horgász Rend</a>
+        <a href="index.html">Kezdőlap</a>
+        <a href="galeria.html">Galéria</a>
+        <a href="uj_fogas.html">Új Fogás Hozzáadása</a>
+        <a href="informaciok.html">Információk</a>
+    </nav>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Információk</title>
+</head>
+<body>
+    <div id="informaciok">
+        <h2>Információk</h2>
+        <ul>
+            <li><a href="https://www.nordfishing77.at/hu/">Nordfishing77</a></li>
+            <li><a href="https://www.haldorado.hu/">Haldorádó</a></li>
+            <li><a href="https://youtu.be/GIrYJiEV5rg?si=po7UW23xLvV9DLQt">Podcast videó</a></li>
+            <li><a id="evszakajanlo" href="#">Évszak ajánló videó</a></li>
+            <li><a id="haviajanlo" href="https://youtu.be/uxM1Pq7PkTU?si=oos8Nv11fjosLi5V">Havi ajánló videó</a></li>
+        </ul>
+    </div>
+
+    <script>
+        // Évszak ajánló videó (ezt évszakonként frissítheti)
+        document.getElementById('evszakajanlo').href = 'https://youtu.be/4yDkIIZ4SiE?si=7dpRj866lyZWy8vA'; // Cserélje le a linket
+    </script>
+</body>
+</html>

@@ -43,6 +43,7 @@ fs.readFile('fogasok.json', (err, data) => {
 
 // Adatok mentése fájlba (aszinkron)
 function saveFogasok() {
+    console.log('Mentendő fogások:', JSON.stringify(fogasok)); // Add hozzá ezt a sort
     fs.writeFile('fogasok.json', JSON.stringify(fogasok), (err) => {
         if (err) {
             console.error('Hiba a fogások mentésekor:', err);

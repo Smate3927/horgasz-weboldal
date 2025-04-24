@@ -12,13 +12,13 @@ app.use(express.json());
 
 // Ellenőrizzük, hogy a fogasok.json létezik-e és üres-e
 try {
-  const fogasokData = fs.readFileSync('fogasok.json', 'utf8');
-  if (fogasokData.trim() === '') {
-    console.log('Nincsenek elmentett fogások.');
-  }
+    const fogasokData = fs.readFileSync('fogasok.json', 'utf8');
+    if (fogasokData.trim() === '') {
+        console.log('Nincsenek elmentett fogások.');
+    }
 } catch (err) {
-  // A fájl nem létezik
-  console.log('Nincsenek elmentett fogások.');
+    // A fájl nem létezik
+    console.log('Nincsenek elmentett fogások.');
 }
 
 const storage = multer.diskStorage({
@@ -64,6 +64,7 @@ function saveFogasok() {
 
 app.post('/feltoltes', upload.array('kepek', 12), (req, res) => {
     console.log('Fogás feltöltése...');
+    console.log('req.files:', req.files); // EZ A SOR HIÁNYZOTT KORÁBBAN
     const ujFogas = {
         id: uuidv4(),
         halfaj: req.body.halfaj,

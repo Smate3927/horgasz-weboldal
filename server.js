@@ -62,9 +62,12 @@ function saveFogasok() {
     });
 }
 
-app.post('/feltoltes', upload.array('kepek', 12), (req, res) => {
+app.post('/feltoltes', (req, res, next) => {
+    console.log('Feltöltés kérés fejlécei:', req.headers);
+    next(); // Hívjuk a következő middleware-t (a multer-t)
+}, upload.array('kepek', 12), (req, res) => {
     console.log('Fogás feltöltése...');
-    console.log('req.files:', req.files); // EZ A SOR HIÁNYZOTT KORÁBBAN
+    console.log('req.files:', req.files);
     const ujFogas = {
         id: uuidv4(),
         halfaj: req.body.halfaj,

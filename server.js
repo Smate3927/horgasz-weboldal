@@ -10,6 +10,17 @@ const port = process.env.PORT || 4000; // Port beállítása a Render-hez
 app.use(express.static('public'));
 app.use(express.json());
 
+// Ellenőrizzük, hogy a fogasok.json létezik-e és üres-e
+try {
+  const fogasokData = fs.readFileSync('fogasok.json', 'utf8');
+  if (fogasokData.trim() === '') {
+    console.log('Nincsenek elmentett fogások.');
+  }
+} catch (err) {
+  // A fájl nem létezik
+  console.log('Nincsenek elmentett fogások.');
+}
+
 const storage = multer.diskStorage({
     destination: './public/kepek/',
     filename: function(req, file, cb) {

@@ -62,12 +62,12 @@ function saveFogasok() {
     });
 }
 
-app.post('/feltoltes', (req, res, next) => {
-    console.log('Feltöltés kérés fejlécei:', req.headers);
-    next(); // Hívjuk a következő middleware-t (a multer-t)
-}, upload.array('kepek', 12), (req, res) => {
+const upload = multer(); // Egyszerűbb konfiguráció
+
+app.post('/feltoltes', upload.array('kepek', 12), (req, res) => {
     console.log('Fogás feltöltése...');
-    console.log('req.files:', req.files);
+    console.log('req.files:', req.files); // Nézzük meg a req.files-t
+    const kepUtvonal = req.files && req.files.length > 0 ? '/kepek/' + req.files[0].originalname : null; // Eredeti név ideiglenesen
     const ujFogas = {
         id: uuidv4(),
         halfaj: req.body.halfaj,
@@ -76,13 +76,14 @@ app.post('/feltoltes', (req, res, next) => {
         helyszin: req.body.helyszin,
         datum: req.body.datum,
         csali: req.body.csali,
-        kep: req.files && req.files.length > 0 ? '/kepek/' + req.files[0].filename : null
+        kep: kepUtvonal
     };
     fogasok.push(ujFogas);
     saveFogasok();
     console.log('Fogás sikeresen rögzítve!');
     res.json({ message: 'Fogás sikeresen rögzítve!' });
 });
+ 
 
 app.get('/fogasok', (req, res) => {
     console.log('Fogások lekérése...');
